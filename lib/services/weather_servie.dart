@@ -25,7 +25,7 @@ class WeatherService {
           "OPPS There is an Error,Try Later";
       throw Exception(errorMessgae);
     } catch (e) {
-      log(e.toString());//log from developer not math pkg
+      log(e.toString()); //log from developer not math pkg
       throw Exception("Error");
     }
   }

@@ -1,7 +1,15 @@
 //1-create states
-class WeatherState{}
-class WeatherInitialState extends WeatherState {}//no weather state
 
-class WeatherLoadedState extends WeatherState {}
+import '../../models/weather_model.dart';
 
-class WeatherFailureState extends WeatherState{}
+class WeatherState {}
+
+class WeatherInitialState extends WeatherState {} //no weather state
+
+class WeatherLoadedState extends WeatherState {
+  final WeatherModel weatherModel;
+
+ WeatherLoadedState(this.weatherModel);
+}
+
+class WeatherFailureState extends WeatherState {}
