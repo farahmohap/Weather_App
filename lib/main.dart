@@ -4,6 +4,7 @@ import 'package:weather_app/cubits/get_weather_cubit/get_weather_cubit.dart';
 import 'package:weather_app/cubits/get_weather_cubit/get_weather_states.dart';
 import 'package:weather_app/newdesign.dart';
 import 'package:weather_app/views/home_view.dart';
+import 'package:weather_app/widgets/noWeatherBody.dart';
 
 void main() {
   runApp(const WeatherApp());
@@ -29,7 +30,7 @@ class WeatherApp extends StatelessWidget {
               //             .weatherModel
               //             ?.weatherCondition)),
                 debugShowCheckedModeBanner: false,
-              home: MyWidget(),
+              home:HomeView(),
             );
           },
         );

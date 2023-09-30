@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
+import 'models/weather_model.dart';
+
 class MyWidget extends StatefulWidget {
-  const MyWidget({super.key});
+  const MyWidget({super.key, required this.weatherModel});
+  final WeatherModel weatherModel;
 
   @override
   State<MyWidget> createState() => _MyWidgetState();
@@ -34,15 +37,15 @@ class _MyWidgetState extends State<MyWidget> {
               child: Stack(
                 children: [
                   Positioned(
-                      top: height * .04,
+                      top: height * .001,
                       child: Text(
-                        "Cairo",
+                        widget.weatherModel.cityName,
                         style: TextStyle(
                             fontSize: 40, fontWeight: FontWeight.bold),
                       )),
                   Container(
                     margin: EdgeInsets.only(
-                      top: 100,
+                      top: 60,
                     ),
                     height: height * .4,
                     width: width * .8,
@@ -60,37 +63,36 @@ class _MyWidgetState extends State<MyWidget> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Sunny",
+                            widget.weatherModel.weatherCondition,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20,
+                                fontSize: 22,
                                 color: Colors.white),
                           ),
                           Text(
-                            "30°",
+                            "${widget.weatherModel.temp.round().toString()}°",
                             style:
                                 TextStyle(fontSize: 130, color: Colors.white),
                           )
                         ]),
                   ),
                   Positioned(
-                      top: height * .1,
-                      right: width * .28,
+                      top: height * .1 / 2.3,
+                      right: width * .4,
                       child: Container(
-                          alignment: Alignment.center,
-                          width: 120,
-                          height: 40,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(50)),
-                          child: Text("Monday,12:30"))),
+                        alignment: Alignment.center,
+                        width: 120,
+                        height: 40,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50)),
+                        child: Text(
+                            "Updated At : ${widget.weatherModel.date.hour}:${widget.weatherModel.date.minute}"),
+                      )),
                   Positioned(
-                    top: height * .01,
-                    left: width * .4,
+                    top: height * .01 - 30,
+                    left: width * .4 - 10,
                     child: SizedBox(
-                        height: 200,
-                        width: 190,
-                        child: Lottie.asset("assets/animations/sunny.json")),
+                        height: 200, width: 190, child: addAnimation()),
                   ),
                 ],
               ),
@@ -99,10 +101,10 @@ class _MyWidgetState extends State<MyWidget> {
               child: Container(
                 color: Color.fromARGB(255, 233, 229, 229),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(right: 16.0, left: 16, top: 88),
+                    const Padding(
+                      padding: EdgeInsets.only(right: 16.0, left: 16, top: 60),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -114,7 +116,7 @@ class _MyWidgetState extends State<MyWidget> {
                           Text(
                             "Next 7 Days >",
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 15),
+                                fontWeight: FontWeight.bold, fontSize: 18),
                           )
                         ],
                       ),
@@ -124,31 +126,47 @@ class _MyWidgetState extends State<MyWidget> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          for (int i = 0; i < 10; i++)
-                            Container(
-                              height: height * .14,
-                              width: width * .18,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                          for (int i = 0;
+                              i < widget.weatherModel.hoursWeather.length;
+                              i++)
+                      
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 10.0, right: 5, bottom: 10),
+                              child: Row(
                                 children: [
-                                  Text(
-                                    "26°",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
+                                  Container(
+                                    height: height * .18,
+                                    width: width * .19,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "${widget.weatherModel.hoursWeather[i]["temp_c"]}°",
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        Image.network(
+                                          "https:${widget.weatherModel.hoursWeather[i]["condition"]["icon"]}",
+                                          fit: BoxFit.fill,
+                                          width: 100,
+                                        ),
+                                        Text(
+                                          widget.weatherModel.hoursWeather[i]["time"]
+                                         ,
+                                          style: const TextStyle(
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.bold),
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                  Image.asset("assets/images/sun.png"),
-                                  Text(
-                                    "11:00",
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontWeight: FontWeight.bold),
-                                  )
                                 ],
                               ),
                             ),
@@ -162,7 +180,7 @@ class _MyWidgetState extends State<MyWidget> {
           ]),
           Container(
             height: height * .19,
-            margin: EdgeInsets.only(left: 40, right: 40, top: height * .56),
+            margin: EdgeInsets.only(left: 40, right: 40, top: height * .5),
             padding: EdgeInsets.all(30),
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(10)),
@@ -171,17 +189,20 @@ class _MyWidgetState extends State<MyWidget> {
               children: [
                 WeatherFeatureItem(
                   icon: Icons.air_outlined,
-                  measure: "9km/h",
+                  measure:
+                      "${widget.weatherModel.wind.round().toString()}km/h ",
                   feature: "Wind",
                 ),
                 WeatherFeatureItem(
                   icon: Icons.water_drop_outlined,
-                  measure: "9km/h",
+                  measure:
+                      "${widget.weatherModel.humididty.round().toString()}%",
                   feature: "Humidity",
                 ),
                 WeatherFeatureItem(
                   icon: Icons.visibility_outlined,
-                  measure: "9km/h",
+                  measure:
+                      "${widget.weatherModel.visibility.round().toString()}km",
                   feature: "Visibility",
                 ),
               ],
@@ -190,6 +211,27 @@ class _MyWidgetState extends State<MyWidget> {
         ]),
       ),
     );
+  }
+
+  TimeConverter(int i) {
+    var date = DateTime.fromMicrosecondsSinceEpoch(
+        widget.weatherModel.hoursWeather[i]["time"]);
+
+    return date;
+  }
+
+  LottieBuilder addAnimation() {
+    if (widget.weatherModel.weatherCondition == "sunny") {
+      return Lottie.asset("assets/animations/sunny.json");
+    }
+    if (widget.weatherModel.weatherCondition == "Partly cloudy" ||
+        widget.weatherModel.weatherCondition == "Cloudy") {
+      return Lottie.asset("assets/animations/cloudy.json");
+    }
+    if (widget.weatherModel.weatherCondition == "Rainy") {
+      return Lottie.asset("assets/animations/rainy.json");
+    }
+    return Lottie.asset("assets/animations/sunny.json");
   }
 }
 
