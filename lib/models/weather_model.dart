@@ -9,11 +9,12 @@ class WeatherModel {
   final double wind;
   final double humididty;
   final List hoursWeather;
-
   final double visibility;
+  final List nextDays;
 
   WeatherModel(
       {required this.cityName,
+      required this.nextDays,
       required this.humididty,
       required this.hoursWeather,
       required this.visibility,
@@ -39,6 +40,8 @@ class WeatherModel {
         wind: json["forecast"]["forecastday"][0]["day"]["maxwind_kph"],
         humididty: json["forecast"]["forecastday"][0]["day"]["avghumidity"],
         visibility: json["forecast"]["forecastday"][0]["day"]["avgvis_km"],
-          hoursWeather: json["forecast"]["forecastday"][0]["hour"]);
+        hoursWeather: json["forecast"]["forecastday"][0]["hour"],
+        nextDays:  json["forecast"]["forecastday"]
+        );
   }
 }

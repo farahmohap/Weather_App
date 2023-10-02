@@ -6,6 +6,7 @@ import 'package:weather_app/newdesign.dart';
 import 'package:weather_app/views/search_view.dart';
 import 'package:weather_app/widgets/noWeatherBody.dart';
 import 'package:weather_app/widgets/weatherInfoBody.dart';
+import 'package:anim_search_bar/anim_search_bar.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -13,39 +14,51 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // weatherModel;//refer to gloal variable
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          toolbarHeight: 35,
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) {
-                    return const SearchView();
-                  }));
+    return SafeArea(
+      bottom: true,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            toolbarHeight: 35,
+            title: Text(
+              "World Weather",
+              style: TextStyle(color: Colors.orange, fontWeight: FontWeight.bold),
+            ),
+            actions: [
+              AnimSearchBar(
+                searchIconColor: Colors.orange,
+                textFieldIconColor: Colors.orange,
+                closeSearchOnSuffixTap: true,
+                rtl: true,
+                helpText: "Search for a city",
+                width: 300,
+                textController: TextEditingController(),
+                onSubmitted: (value) async {
+                  //6-trigger cubit
+                  var getWeatherCubit = BlocProvider.of<GetWeatherCubit>(
+                      context); //= getweather object
+                  getWeatherCubit.getWeather(CityName: value);
                 },
-                icon: const Icon(
-                  Icons.search,
-                  size: 35,
-                  color: Colors.orange,
-                ))
-          ],
-        ),
-        //widget  used to listen to cubit
-        //5-integrate cubit
-        body: BlocBuilder<GetWeatherCubit, WeatherState>(
-            builder: (context, state) {
-          if (state is WeatherInitialState) {
-            return NoWeatherBody();
-          } else if (state is WeatherLoadedState) {
-            return MyWidget(
-              weatherModel: state.weatherModel,
-            );
-          } else {
-            return Text("OPPS , ERROR");
-          }
-        }));
+                onSuffixTap: () {},
+              )
+            ],
+          ),
+          //widget  used to listen to cubit
+          //5-integrate cubit
+          body: BlocBuilder<GetWeatherCubit, WeatherState>(
+              builder: (context, state) {
+            if (state is WeatherInitialState) {
+              return NoWeatherBody();
+            } else if (state is WeatherLoadedState) {
+              return MyWidget(
+                weatherModel: state.weatherModel,
+              );
+            } else {
+              return Text("Opps , There Is An Error");
+            }
+          })),
+    );
   }
 }

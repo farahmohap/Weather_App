@@ -24,3 +24,5 @@ class GetWeatherCubit extends Cubit<WeatherState> {
     //log(weatherModel!.cityName);
   }
 }
+
+
