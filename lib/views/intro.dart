@@ -109,7 +109,11 @@ class Intro extends StatelessWidget {
                 onTap: () async {
                   var getWeatherCubit = BlocProvider.of<GetWeatherCubit>(
                       context); //= getweather object
-                  getWeatherCubit.getWeather(CityName: "london");
+                  List<Placemark> placemarks =
+                      await placemarkFromCoordinates(30.54760410, 31.00843690);
+                  print(placemarks[0].locality);
+                  getWeatherCubit.getWeather(CityName: placemarks[0].locality);
+
                   Navigator.of(context)
                       .pushReplacement(MaterialPageRoute(builder: (context) {
                     return HomeView();
@@ -137,8 +141,9 @@ class Intro extends StatelessWidget {
   }
 }
 
-getLocation() async {
-  List<Placemark> placemarks =
-      await placemarkFromCoordinates(30.566750,31.014183);
-  return placemarks[0].country;
-}
+// getLocation() async {
+//   List<Placemark> placemarks =
+//       await placemarkFromCoordinates(31.014183, 30.566750);
+//   //print(placemarks[0].country);
+//   return placemarks[0].country.toString();
+// }

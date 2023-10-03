@@ -25,6 +25,11 @@ class _MyWidgetState extends State<MyWidget> {
         resizeToAvoidBottomInset: false,
         backgroundColor: Color.fromARGB(255, 252, 249, 249),
         body: Stack(children: [
+          Container(
+              height: double.infinity,
+              width: double.infinity,
+              child: Lottie.asset("assets/animations/snowfall.json",
+                  fit: BoxFit.fill)),
           Column(children: [
             Expanded(
               flex: 2,
@@ -35,7 +40,7 @@ class _MyWidgetState extends State<MyWidget> {
                       child: Text(
                         widget.weatherModel.cityName,
                         style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.bold),
+                            fontSize: 25, fontWeight: FontWeight.bold),
                       )),
                   Container(
                     margin: EdgeInsets.only(
@@ -63,24 +68,62 @@ class _MyWidgetState extends State<MyWidget> {
                                 fontSize: 22,
                                 color: Colors.white),
                           ),
-                          Text(
-                            "${widget.weatherModel.temp.round().toString()}°",
-                            style:
-                                TextStyle(fontSize: 130, color: Colors.white),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                "${widget.weatherModel.temp.round().toString()}°",
+                                style: TextStyle(
+                                    fontSize: 130, color: Colors.white),
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    "Day   : ${widget.weatherModel.maxTemp.round().toString()}°",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  Text(
+                                    "Night: ${widget.weatherModel.minTemp.round().toString()}°",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                ],
+                              ),
+                            ],
                           ),
-                          Text(
-                            "Max Temp : ${widget.weatherModel.maxTemp.round().toString()}°",
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "Min Temp : ${widget.weatherModel.minTemp.round().toString()}°",
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Row(
+                                children: [
+                                  Image.asset("assets/images/sunrise.png"),
+                                  Text(
+                                    "${widget.weatherModel.sunrise}",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Image.asset("assets/images/sunset.png"),
+                                  Text(
+                                    "${widget.weatherModel.sunset}",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              )
+                            ],
                           )
                         ]),
                   ),
@@ -107,12 +150,12 @@ class _MyWidgetState extends State<MyWidget> {
             ),
             Expanded(
               child: Container(
-                color: Color.fromARGB(255, 233, 229, 229),
+                color: Color.fromARGB(255, 224, 224, 224).withOpacity(.5),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Padding(
-                      padding: EdgeInsets.only(right: 16.0, left: 16, top: 60),
+                      padding: EdgeInsets.only(right: 16.0, left: 16, top: 50),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -161,7 +204,7 @@ class _MyWidgetState extends State<MyWidget> {
                                     height: height * .18,
                                     width: width * .19,
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: Colors.white70,
                                       borderRadius: BorderRadius.circular(15),
                                     ),
                                     child: Column(
@@ -190,7 +233,7 @@ class _MyWidgetState extends State<MyWidget> {
                                                   10,
                                                 ),
                                             style: const TextStyle(
-                                                fontSize: 12,
+                                                fontSize: 15,
                                                 color: Colors.grey,
                                                 fontWeight: FontWeight.bold),
                                           ),
@@ -238,7 +281,7 @@ class _MyWidgetState extends State<MyWidget> {
                 ),
               ],
             ),
-          ),
+          )
         ]),
       ),
     );

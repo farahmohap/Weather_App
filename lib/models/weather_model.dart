@@ -11,9 +11,14 @@ class WeatherModel {
   final List hoursWeather;
   final double visibility;
   final List nextDays;
+  final String sunrise;
+
+  final String sunset;
 
   WeatherModel(
       {required this.cityName,
+      required this.sunrise,
+      required this.sunset,
       required this.nextDays,
       required this.humididty,
       required this.hoursWeather,
@@ -41,7 +46,8 @@ class WeatherModel {
         humididty: json["forecast"]["forecastday"][0]["day"]["avghumidity"],
         visibility: json["forecast"]["forecastday"][0]["day"]["avgvis_km"],
         hoursWeather: json["forecast"]["forecastday"][0]["hour"],
-        nextDays:  json["forecast"]["forecastday"]
-        );
+        nextDays: json["forecast"]["forecastday"],
+        sunrise: json["forecast"]["forecastday"][0]["astro"]["sunrise"],
+        sunset: json["forecast"]["forecastday"][0]["astro"]["sunset"]);
   }
 }
