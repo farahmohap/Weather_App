@@ -16,17 +16,21 @@ class NoWeatherBody extends StatefulWidget {
 class _NoWeatherBodyState extends State<NoWeatherBody> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-  width: 200.0,
-  height: 100.0,
-  child: Shimmer(child: Center(child: CircularProgressIndicator()),gradient:  const LinearGradient(
-                                        begin: Alignment.topRight,
-                                        end: Alignment.bottomLeft,
-                                        colors: [
-                                          Color.fromARGB(170, 249, 88, 222),
-                                          Color.fromARGB(183, 251, 255, 25),
-                                        ],
-                                      ),)
-);
+    return const Center(
+      child: SizedBox(
+          width: 200.0,
+          height: 100.0,
+          child: Shimmer(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              colors: [
+                Color.fromARGB(170, 249, 88, 222),
+                Color.fromARGB(183, 251, 255, 25),
+              ],
+            ),
+            child: Center(child: CircularProgressIndicator()),
+          )),
+    );
   }
 }

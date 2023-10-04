@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app/cubits/get_weather_cubit/get_weather_cubit.dart';
 import 'package:weather_app/cubits/get_weather_cubit/get_weather_states.dart';
-import 'package:weather_app/newdesign.dart';
-import 'package:weather_app/views/search_view.dart';
+import 'package:weather_app/widgets/WeatherInfoBody.dart';
 import 'package:weather_app/widgets/noWeatherBody.dart';
-import 'package:weather_app/widgets/weatherInfoBody.dart';
 import 'package:anim_search_bar/anim_search_bar.dart';
 
 class HomeView extends StatelessWidget {
@@ -52,7 +50,7 @@ class HomeView extends StatelessWidget {
             if (state is WeatherInitialState) {
               return NoWeatherBody();
             } else if (state is WeatherLoadedState) {
-              return MyWidget(
+              return WeatherInfoBody(
                 weatherModel: state.weatherModel,
               );
             } else {

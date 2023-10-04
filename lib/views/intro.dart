@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:lottie/lottie.dart';
-import 'package:weather_app/models/weather_model.dart';
-import 'package:weather_app/newdesign.dart';
 import 'package:weather_app/views/home_view.dart';
-
 import '../cubits/get_weather_cubit/get_weather_cubit.dart';
 
 class Intro extends StatelessWidget {
@@ -141,9 +137,3 @@ class Intro extends StatelessWidget {
   }
 }
 
-// getLocation() async {
-//   List<Placemark> placemarks =
-//       await placemarkFromCoordinates(31.014183, 30.566750);
-//   //print(placemarks[0].country);
-//   return placemarks[0].country.toString();
-// }
